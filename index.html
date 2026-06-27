@@ -349,6 +349,49 @@ body { font-family: var(--sans); font-size: 16px; line-height: 1.68; background:
   .footer-tagline     { font-size: 13px; }
   .next-step          { padding: 18px 16px; }
   .pathway-card       { padding: 18px 16px; }
+
+  /* Metric snapshot   single column stat rows */
+  .metrics-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0 !important;
+  }
+  .metric-item {
+    display: flex;
+    flex-direction: column;
+    padding: 14px 0;
+    border-top: 1px solid rgba(255,255,255,.1);
+  }
+  .metric-item:first-child { border-top: none; }
+  .metric-val  { font-size: 26px !important; margin-bottom: 3px; }
+  .metric-desc { font-size: 13px; }
+
+  /* Nav   stack on mobile */
+  .doc-nav {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 14px 20px;
+    gap: 10px;
+  }
+  .doc-nav-right { width: 100%; display: flex; justify-content: space-between; align-items: center; }
+  .doc-nav-cta   { width: auto; }
+
+  /* Exec summary   prevent overflow */
+  .exec-summary  { overflow-wrap: break-word; word-break: break-word; }
+  .exec-bullets  { gap: 12px; }
+  .exec-bullet   { 
+    overflow-wrap: break-word; 
+    word-break: break-word; 
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .exec-bullet strong { display: block; margin-bottom: 2px; }
+
+  /* Prevent any horizontal overflow globally */
+  body, .doc-body, .exec-summary, .doc-section { 
+    max-width: 100%; 
+    overflow-x: hidden; 
+  }
+  * { max-width: 100%; box-sizing: border-box; }
 }
 
 /* ── SMALL MOBILE (max 400px) ── */
@@ -411,6 +454,7 @@ body { font-family: var(--sans); font-size: 16px; line-height: 1.68; background:
 <!-- NAVIGATION -->
 <nav class="doc-nav">
   <div class="doc-nav-brand">Cousins Styling Studio</div>
+  <div class="doc-nav-right">
   <div class="doc-nav-links">
     <a class="doc-nav-link" href="#exec">Summary</a>
     <a class="doc-nav-link" href="#challenge">Challenge</a>
@@ -423,6 +467,7 @@ body { font-family: var(--sans); font-size: 16px; line-height: 1.68; background:
     <a class="doc-nav-link" href="#next">Next Steps</a>
   </div>
   <a class="doc-nav-cta" href="tel:9516534477">Schedule a Call</a>
+  </div>
 </nav>
 
 <div class="doc-body">
@@ -435,7 +480,8 @@ body { font-family: var(--sans); font-size: 16px; line-height: 1.68; background:
       <div class="exec-summary-label">The short version</div>
       <div class="exec-summary-text">Cousins Styling Studio partners with care organizations, day programs, residential providers, and workforce programs to deliver recurring professional appearance programs that improve quality of life, reduce administrative burden, and create measurable, documented outcomes for the people you serve.</div>
       <div class="exec-bullets">
-        <div class="exec-bullet">Two program options: <strong style="color:var(--white);font-style:italic;">Recurring Experience Program&trade;</strong> for ongoing professional appearance access, and <strong style="color:var(--white);font-style:italic;">Confidence &amp; Independence Program&trade;</strong> for facilitated educational sessions built on a proprietary curriculum framework</div>
+        <div class="exec-bullet"><strong style="color:var(--white);font-style:italic;">Recurring Experience Program&trade;</strong><span style="color:rgba(255,255,255,.45);margin:0 6px;">&#183;</span>Recurring professional appearance access, fully coordinated by Cousins</div>
+        <div class="exec-bullet"><strong style="color:var(--white);font-style:italic;">Confidence &amp; Independence Program&trade;</strong><span style="color:rgba(255,255,255,.45);margin:0 6px;">&#183;</span>Facilitated educational workshops built on a proprietary curriculum framework</div>
         <div class="exec-bullet">All coordination, scheduling, communication, and documentation managed by Cousins</div>
         <div class="exec-bullet">Licensed, insured, background-checked professionals on every engagement, minimum two per visit</div>
         <div class="exec-bullet">Most programs launch within 30 to 60 days of agreement</div>
@@ -675,8 +721,8 @@ body { font-family: var(--sans); font-size: 16px; line-height: 1.68; background:
           <div class="metric-desc">Licensed professionals, minimum per visit</div>
         </div>
         <div class="metric-item">
-          <div class="metric-val">Mobile + Studio + On-Site</div>
-          <div class="metric-desc">Mobile unit, studio, and on-site where available</div>
+          <div class="metric-val">3 Delivery Models</div>
+          <div class="metric-desc">Mobile unit, studio, and on-site service options</div>
         </div>
         <div class="metric-item">
           <div class="metric-val">4</div>
