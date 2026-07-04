@@ -273,23 +273,11 @@ body { font-family: var(--sans); font-size: 16px; line-height: 1.68; background:
 .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 24px; }
 .action-card { background: var(--white); border: 1px solid var(--stone); border-top: 3px solid var(--gold); border-radius: 3px; padding: 18px 20px; display: flex; flex-direction: column; gap: 6px; text-decoration: none; cursor: pointer; transition: border-color var(--ease), box-shadow var(--ease); }
 .action-card:hover { border-color: var(--gold); box-shadow: 0 2px 10px rgba(28,53,40,.08); }
+.action-card.static { cursor: default; }
+.action-card.static:hover { border-color: var(--stone); box-shadow: none; }
 .action-card-label { font-family: var(--mono); font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); }
 .action-card-title { font-size: 15px; font-weight: 600; color: var(--forest); }
 .action-card-desc  { font-size: 13px; color: var(--mid); line-height: 1.5; }
-
-/* ── EMAIL-GATED SHARE FORM ── */
-.share-email-form { display: none; flex-direction: column; gap: 8px; margin-top: 4px; }
-.share-email-form.open { display: flex; }
-.share-email-input { padding: 10px 12px; border: 1px solid var(--stone); border-radius: 3px; font-family: var(--sans); font-size: 13px; color: var(--txt); }
-.share-email-submit { background: var(--gold); color: var(--forest); border: none; padding: 10px 14px; border-radius: 3px; font-family: var(--mono); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; cursor: pointer; }
-.share-email-submit:hover { background: var(--gold-lt); }
-.share-email-error { display: none; font-size: 12px; color: #a8471f; }
-
-/* ── RESOURCE LINKS (legacy, unused, kept for reference) ── */
-.resource-links { margin-top: 20px; padding: 18px 24px; border: 1px dashed var(--stone); border-radius: 3px; display: flex; flex-direction: column; gap: 10px; }
-.resource-links-label { font-family: var(--mono); font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--dim); margin-bottom: 2px; }
-.resource-link { font-size: 14px; color: var(--forest); text-decoration: none; }
-.resource-link:hover { color: var(--gold); text-decoration: underline; }
 
 /* ── CONTACT FOOTER ── */
 .doc-footer { background: var(--forest); padding: 52px 72px; margin-top: 80px; }
@@ -1294,36 +1282,21 @@ body { font-family: var(--sans); font-size: 16px; line-height: 1.68; background:
         <div class="action-card-title">(951) 653-4477</div>
         <div class="action-card-desc">Speak with our team directly. No form required.</div>
       </a>
-      <div class="action-card" onclick="toggleRequestForm('guide-email-form')">
+      <div class="action-card static">
         <div class="action-card-label">Program Deep Dive</div>
-        <div class="action-card-title">Request the Program Guide</div>
-        <div class="action-card-desc">Ask for it on your call, or enter your email and we will send it to you directly.</div>
-        <form class="share-email-form" id="guide-email-form" onsubmit="submitRequestEmail(event, 'guide-email-form', 'Program Guide requested', 'A prospect requested the Program Guide.', false)" onclick="event.stopPropagation()">
-          <input class="share-email-input" type="email" placeholder="you@organization.org" required>
-          <div class="share-email-error">Please enter a valid email address.</div>
-          <button class="share-email-submit" type="submit">Request Guide</button>
-        </form>
+        <div class="action-card-title">Ask on Your Discovery Call</div>
+        <div class="action-card-desc">The full Program Guide, curriculum, and pricing detail are best walked through live on your call.</div>
       </div>
-      <div class="action-card" onclick="toggleRequestForm('assessment-email-form')">
+      <div class="action-card static">
         <div class="action-card-label">Program Assessment</div>
-        <div class="action-card-title">Request the Assessment</div>
-        <div class="action-card-desc">Ask for it on your call, or enter your email and we will send the four questions directly.</div>
-        <form class="share-email-form" id="assessment-email-form" onsubmit="submitRequestEmail(event, 'assessment-email-form', 'Program Assessment requested', 'A prospect requested the Program Assessment.', false)" onclick="event.stopPropagation()">
-          <input class="share-email-input" type="email" placeholder="you@organization.org" required>
-          <div class="share-email-error">Please enter a valid email address.</div>
-          <button class="share-email-submit" type="submit">Request Assessment</button>
-        </form>
+        <div class="action-card-title">Ask on Your Discovery Call</div>
+        <div class="action-card-desc">We will walk through the four questions together and give you an investment range live.</div>
       </div>
-      <div class="action-card" onclick="toggleRequestForm('share-email-form')">
+      <a class="action-card" href="#" onclick="window.print(); return false;">
         <div class="action-card-label">Share This Proposal</div>
-        <div class="action-card-title">Print or Send to Your Team</div>
-        <div class="action-card-desc">Enter your email and we will unlock a printable copy.</div>
-        <form class="share-email-form" id="share-email-form" onsubmit="submitRequestEmail(event, 'share-email-form', 'Program Overview shared, lead captured', 'A prospect requested a printable copy of the Program Overview.', true)" onclick="event.stopPropagation()">
-          <input class="share-email-input" type="email" placeholder="you@organization.org" required>
-          <div class="share-email-error">Please enter a valid email address.</div>
-          <button class="share-email-submit" type="submit">Send &amp; Print</button>
-        </form>
-      </div>
+        <div class="action-card-title">Print This Proposal</div>
+        <div class="action-card-desc">Print or save a copy to share with your executive director or board.</div>
+      </a>
     </div>
   </div>
 
@@ -1363,28 +1336,6 @@ body { font-family: var(--sans); font-size: 16px; line-height: 1.68; background:
 </div>
 
 <script>
-function toggleRequestForm(formId) {
-  document.getElementById(formId).classList.toggle('open');
-}
-function submitRequestEmail(e, formId, subjectText, bodyText, shouldPrint) {
-  e.preventDefault();
-  const form = document.getElementById(formId);
-  const emailField = form.querySelector('.share-email-input');
-  const errorEl = form.querySelector('.share-email-error');
-  const email = emailField.value.trim();
-  const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  if (!isValid) {
-    errorEl.style.display = 'block';
-    return;
-  }
-  errorEl.style.display = 'none';
-  const subject = encodeURIComponent(subjectText);
-  const body = encodeURIComponent(bodyText + '\n\nEmail provided: ' + email);
-  window.location.href = 'mailto:info@bookcousins.com?subject=' + subject + '&body=' + body;
-  if (shouldPrint) {
-    window.setTimeout(function () { window.print(); }, 500);
-  }
-}
 function toggleFaq(btn) {
   const answer  = btn.nextElementSibling;
   const isOpen  = answer.classList.contains('open');
