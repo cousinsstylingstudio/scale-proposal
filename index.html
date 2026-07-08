@@ -273,11 +273,23 @@ body { font-family: var(--sans); font-size: 16px; line-height: 1.68; background:
 .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 24px; }
 .action-card { background: var(--white); border: 1px solid var(--stone); border-top: 3px solid var(--gold); border-radius: 3px; padding: 18px 20px; display: flex; flex-direction: column; gap: 6px; text-decoration: none; cursor: pointer; transition: border-color var(--ease), box-shadow var(--ease); }
 .action-card:hover { border-color: var(--gold); box-shadow: 0 2px 10px rgba(28,53,40,.08); }
-.action-card.static { cursor: default; }
-.action-card.static:hover { border-color: var(--stone); box-shadow: none; }
 .action-card-label { font-family: var(--mono); font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); }
 .action-card-title { font-size: 15px; font-weight: 600; color: var(--forest); }
 .action-card-desc  { font-size: 13px; color: var(--mid); line-height: 1.5; }
+
+/* ── EMAIL-GATED SHARE FORM ── */
+.share-email-form { display: none; flex-direction: column; gap: 8px; margin-top: 4px; }
+.share-email-form.open { display: flex; }
+.share-email-input { padding: 10px 12px; border: 1px solid var(--stone); border-radius: 3px; font-family: var(--sans); font-size: 13px; color: var(--txt); }
+.share-email-submit { background: var(--gold); color: var(--forest); border: none; padding: 10px 14px; border-radius: 3px; font-family: var(--mono); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; cursor: pointer; }
+.share-email-submit:hover { background: var(--gold-lt); }
+.share-email-error { display: none; font-size: 12px; color: #a8471f; }
+
+/* ── RESOURCE LINKS (legacy, unused, kept for reference) ── */
+.resource-links { margin-top: 20px; padding: 18px 24px; border: 1px dashed var(--stone); border-radius: 3px; display: flex; flex-direction: column; gap: 10px; }
+.resource-links-label { font-family: var(--mono); font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--dim); margin-bottom: 2px; }
+.resource-link { font-size: 14px; color: var(--forest); text-decoration: none; }
+.resource-link:hover { color: var(--gold); text-decoration: underline; }
 
 /* ── CONTACT FOOTER ── */
 .doc-footer { background: var(--forest); padding: 52px 72px; margin-top: 80px; }
@@ -334,7 +346,269 @@ body { font-family: var(--sans); font-size: 16px; line-height: 1.68; background:
 .urgency-bar-cta { font-family: var(--mono); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; background: var(--gold); color: var(--forest); padding: 10px 18px; border-radius: 3px; text-decoration: none; white-space: nowrap; font-weight: 600; flex-shrink: 0; }
 .urgency-bar-cta:hover { background: var(--gold-lt); }
 
-/* ── TABLET (769px to 1024px) ── */
+/* ── ROLE GATE ── */
+.role-gate {
+  background: var(--cream);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.role-gate::before {
+  content: '';
+  position: absolute;
+  bottom: -120px; right: -120px;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  border: 1px solid rgba(28,53,40,.06);
+  pointer-events: none;
+}
+
+.role-gate::after {
+  content: '';
+  position: absolute;
+  top: -80px; left: -80px;
+  width: 400px; height: 400px;
+  border-radius: 50%;
+  border: 1px solid rgba(184,134,11,.06);
+  pointer-events: none;
+}
+
+.role-gate-inner {
+  max-width: 640px;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+.role-gate-eyebrow {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+
+.role-gate-title {
+  font-family: var(--serif);
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 700;
+  color: var(--forest);
+  line-height: 1.08;
+  margin-bottom: 16px;
+}
+
+.role-gate-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.role-gate-sub {
+  font-size: 16px;
+  color: var(--mid);
+  line-height: 1.7;
+  margin-bottom: 52px;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.role-gate-rule {
+  width: 36px;
+  height: 2px;
+  background: var(--gold);
+  margin: 0 auto 48px;
+}
+
+.role-gate-prompt {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: 20px;
+}
+
+.role-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+}
+
+.role-option {
+  background: var(--white);
+  border: 1px solid var(--stone);
+  border-radius: 4px;
+  padding: 20px 24px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(.4,0,.2,1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  text-decoration: none;
+}
+
+.role-option:hover {
+  border-color: var(--forest);
+  box-shadow: 0 2px 16px rgba(28,53,40,.08);
+  transform: translateY(-1px);
+}
+
+.role-option:hover .role-option-arrow {
+  transform: translateX(4px);
+  color: var(--gold);
+}
+
+.role-option-left {}
+
+.role-option-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--forest);
+  margin-bottom: 3px;
+  line-height: 1.3;
+}
+
+.role-option-desc {
+  font-size: 13px;
+  color: var(--mid);
+  line-height: 1.5;
+}
+
+.role-option-arrow {
+  color: var(--stone);
+  font-size: 20px;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.role-gate-skip {
+  margin-top: 28px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--dim);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  padding: 6px 0;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.role-gate-skip:hover {
+  color: var(--forest);
+  border-bottom-color: var(--gold);
+}
+
+/* ── ROLE BANNER (after selection) ── */
+.role-banner {
+  display: none;
+  background: var(--forest);
+  padding: 16px 72px;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  border-bottom: 1px solid rgba(184,134,11,.15);
+}
+
+.role-banner.visible { display: block; }
+
+.role-banner-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.role-banner-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.role-banner-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.35);
+  white-space: nowrap;
+}
+
+.role-banner-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gold-lt);
+}
+
+.role-banner-message {
+  font-size: 12px;
+  color: rgba(255,255,255,.55);
+  line-height: 1.5;
+  max-width: 480px;
+}
+
+.role-banner-change {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.3);
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,.12);
+  padding: 5px 12px;
+  border-radius: 3px;
+  white-space: nowrap;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.role-banner-change:hover {
+  color: var(--gold-lt);
+  border-color: rgba(184,134,11,.4);
+}
+
+/* ── SECTION RELEVANCE ── */
+.doc-section {
+  transition: opacity 0.3s ease;
+}
+
+.section-for-badge {
+  display: none;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: rgba(184,134,11,.08);
+  border: 1px solid rgba(184,134,11,.2);
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+}
+
+.section-for-badge.show { display: inline-block; }
+
+@media (max-width: 768px) {
+  .role-gate { padding: 60px 24px; }
+  .role-option { padding: 16px 18px; }
+  .role-banner { padding: 12px 20px; }
+  .role-banner-message { display: none; }
+}
 @media (max-width: 1024px) {
   .cover            { padding: 52px 48px; }
   .doc-nav          { padding: 0 32px; }
@@ -493,6 +767,73 @@ body { font-family: var(--sans); font-size: 16px; line-height: 1.68; background:
   </div>
 </div>
 
+<!-- ── ROLE GATE ── -->
+<div class="role-gate" id="role-gate">
+  <div class="role-gate-inner">
+    <div class="role-gate-eyebrow">Cousins Styling Studio &nbsp;&middot;&nbsp; SCALE Division</div>
+    <h2 class="role-gate-title">This proposal was built<br>for <em>your</em> organization.</h2>
+    <p class="role-gate-sub">Tell us what best describes your role and we will highlight the sections most relevant to you.</p>
+    <div class="role-gate-rule"></div>
+    <div class="role-gate-prompt">I work in or lead</div>
+    <div class="role-options">
+
+      <button class="role-option" onclick="selectRole('care')">
+        <div class="role-option-left">
+          <div class="role-option-title">A healthcare or care facility</div>
+          <div class="role-option-desc">Senior living, residential care, board and care homes, adult day programs, memory care</div>
+        </div>
+        <div class="role-option-arrow">&#x2192;</div>
+      </button>
+
+      <button class="role-option" onclick="selectRole('pace')">
+        <div class="role-option-left">
+          <div class="role-option-title">A PACE or adult day health center</div>
+          <div class="role-option-desc">Programs of All-inclusive Care for the Elderly or structured adult day health services</div>
+        </div>
+        <div class="role-option-arrow">&#x2192;</div>
+      </button>
+
+      <button class="role-option" onclick="selectRole('foster')">
+        <div class="role-option-left">
+          <div class="role-option-title">A foster youth or social services organization</div>
+          <div class="role-option-desc">Group homes, transitional housing, foster family agencies, independent living programs, county child welfare</div>
+        </div>
+        <div class="role-option-arrow">&#x2192;</div>
+      </button>
+
+      <button class="role-option" onclick="selectRole('school')">
+        <div class="role-option-left">
+          <div class="role-option-title">A school district or educational institution</div>
+          <div class="role-option-desc">Superintendent, principal, or administrator overseeing student support or staff wellness</div>
+        </div>
+        <div class="role-option-arrow">&#x2192;</div>
+      </button>
+
+      <button class="role-option" onclick="selectRole('employer')">
+        <div class="role-option-left">
+          <div class="role-option-title">An HR department or large employer</div>
+          <div class="role-option-desc">Human resources, benefits, or employee wellness at a hospital, county agency, or large organization</div>
+        </div>
+        <div class="role-option-arrow">&#x2192;</div>
+      </button>
+
+    </div>
+    <a class="role-gate-skip" onclick="skipRole(); return false;" href="#">I will explore on my own &nbsp;&rarr;</a>
+  </div>
+</div>
+
+<!-- ── ROLE BANNER ── -->
+<div class="role-banner" id="role-banner">
+  <div class="role-banner-inner">
+    <div class="role-banner-left">
+      <div class="role-banner-label">Viewing as</div>
+      <div class="role-banner-name" id="role-banner-name"></div>
+      <div class="role-banner-message" id="role-banner-message"></div>
+    </div>
+    <a class="role-banner-change" onclick="resetRole(); return false;" href="#">Change &rarr;</a>
+  </div>
+</div>
+
 <!-- NAVIGATION -->
 <nav class="doc-nav">
   <div class="doc-nav-brand">Cousins Styling Studio</div>
@@ -522,9 +863,9 @@ body { font-family: var(--sans); font-size: 16px; line-height: 1.68; background:
     <h2 class="doc-h2">One decision. One operating partner.</h2>
     <div class="exec-summary">
       <div style="font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-lt);margin-bottom:6px;">One sentence</div>
-      <div style="font-family:var(--serif);font-size:22px;font-style:italic;color:var(--white);line-height:1.45;margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid rgba(255,255,255,.12);">Cousins becomes the operating partner responsible for delivering a measurable improvement in participant experience, while removing the operational burden from your staff.</div>
+      <div style="font-family:var(--serif);font-size:22px;font-style:italic;color:var(--white);line-height:1.45;margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid rgba(255,255,255,.12);" class="exec-one-sentence">Cousins becomes the operating partner responsible for delivering a measurable improvement in participant experience, while removing the operational burden from your staff.</div>
       <div class="exec-summary-label">The result</div>
-      <div class="exec-summary-text">Stronger participant wellbeing. Greater family and employee confidence. A more efficient organization your leadership team can measure quarter over quarter. Three outcomes, one decision.</div>
+      <div class="exec-summary-text exec-result-text">Stronger participant wellbeing. Greater family and employee confidence. A more efficient organization your leadership team can measure quarter over quarter. Three outcomes, one decision.</div>
       <div class="exec-bullets">
         <div class="exec-bullet">Delivered through two programs, the Recurring Experience Program and the Confidence and Independence Program. The programs are the mechanism, not the headline.</div>
         <div class="exec-bullet">Licensed, insured, background-checked professionals on every engagement, minimum two per visit</div>
@@ -537,7 +878,7 @@ body { font-family: var(--sans); font-size: 16px; line-height: 1.68; background:
   <div class="doc-section" id="challenge">
     <div class="section-label">The Current Challenge</div>
     <h2 class="doc-h2">What most organizations are navigating today.</h2>
-    <p class="doc-lead">Access to professional personal care is rarely treated as a program priority. It is managed as an operational afterthought. The result is a gap that affects the wellbeing, dignity, and satisfaction of the people your organization serves.</p>
+    <p class="doc-lead challenge-lead">Access to professional personal care is rarely treated as a program priority. It is managed as an operational afterthought. The result is a gap that affects the wellbeing, dignity, and satisfaction of the people your organization serves.</p>
     <div class="problem-list">
       <div class="problem-item">
         <div class="problem-num">1</div>
@@ -598,7 +939,7 @@ body { font-family: var(--sans); font-size: 16px; line-height: 1.68; background:
   <div class="doc-section" id="roi">
     <div class="section-label">What Changes</div>
     <h2 class="doc-h2">What changes when Cousins becomes your partner.</h2>
-    <p class="doc-lead">Before the mechanics of how the program runs, here is what actually shifts, for the people you serve, for your staff, and for the leadership team that has to report on results.</p>
+    <p class="doc-lead roi-lead">Before the mechanics of how the program runs, here is what actually shifts, for the people you serve, for your staff, and for the leadership team that has to report on results.</p>
     <div class="compare-grid">
       <div class="compare-head">
         <div class="compare-head-before">Without a Partner</div>
@@ -682,7 +1023,9 @@ body { font-family: var(--sans); font-size: 16px; line-height: 1.68; background:
   <div class="doc-section" id="programs">
     <div class="section-label">Program Options</div>
     <h2 class="doc-h2">Two programs. One operating partner.</h2>
-    <p class="doc-lead">Cousins offers two programs designed for different organizational missions. Many organizations implement both. The right starting point depends on your population, your goals, and your current programming structure. Both programs serve care organizations and employers equally. The delivery adapts. The standard does not.</p>
+    <p class="doc-lead programs-lead">Cousins offers two programs designed for different organizational missions. Many organizations implement both. The right starting point depends on your population, your goals, and your current programming structure. Both programs serve care organizations and employers equally. The delivery adapts. The standard does not.</p>
+
+    <div class="program-focus-note" style="display:none; background:var(--cream); border-left:3px solid var(--gold); padding:14px 18px; border-radius:0 3px 3px 0; margin-bottom:24px; font-size:14px; color:var(--mid); line-height:1.65;"></div>
 
     <div class="prog-option prog-option-a">
       <div class="prog-option-label">Program A</div>
@@ -1247,7 +1590,7 @@ body { font-family: var(--sans); font-size: 16px; line-height: 1.68; background:
     <div class="section-label">One Year From Now</div>
     <h2 class="doc-h2">Picture your organization a year into the partnership.</h2>
     <div class="exec-summary">
-      <div class="exec-summary-text" style="margin-bottom:0;">Participants expect and look forward to every visit. Families see visible evidence of care instead of simply hearing promises. Staff spend their time serving people instead of coordinating vendors. Leadership receives measurable reports demonstrating the program's impact. Your organization becomes known for delivering an experience that very few providers offer.</div>
+      <div class="exec-summary-text vision-close-text" style="margin-bottom:0;">Participants expect and look forward to every visit. Families see visible evidence of care instead of simply hearing promises. Staff spend their time serving people instead of coordinating vendors. Leadership receives measurable reports demonstrating the program's impact. Your organization becomes known for delivering an experience that very few providers offer.</div>
       <div class="exec-bullets" style="margin-top:22px;">
         <div class="exec-bullet">One decision starts this. Schedule a Discovery Call. Everything else in this proposal supports that decision.</div>
       </div>
@@ -1282,21 +1625,36 @@ body { font-family: var(--sans); font-size: 16px; line-height: 1.68; background:
         <div class="action-card-title">(951) 653-4477</div>
         <div class="action-card-desc">Speak with our team directly. No form required.</div>
       </a>
-      <div class="action-card static">
+      <div class="action-card" onclick="toggleRequestForm('guide-email-form')">
         <div class="action-card-label">Program Deep Dive</div>
-        <div class="action-card-title">Ask on Your Discovery Call</div>
-        <div class="action-card-desc">The full Program Guide, curriculum, and pricing detail are best walked through live on your call.</div>
+        <div class="action-card-title">Request the Program Guide</div>
+        <div class="action-card-desc">Ask for it on your call, or enter your email and we will send it to you directly.</div>
+        <form class="share-email-form" id="guide-email-form" onsubmit="submitRequestEmail(event, 'guide-email-form', 'Program Guide requested', 'A prospect requested the Program Guide.', false)" onclick="event.stopPropagation()">
+          <input class="share-email-input" type="email" placeholder="you@organization.org" required>
+          <div class="share-email-error">Please enter a valid email address.</div>
+          <button class="share-email-submit" type="submit">Request Guide</button>
+        </form>
       </div>
-      <div class="action-card static">
+      <div class="action-card" onclick="toggleRequestForm('assessment-email-form')">
         <div class="action-card-label">Program Assessment</div>
-        <div class="action-card-title">Ask on Your Discovery Call</div>
-        <div class="action-card-desc">We will walk through the four questions together and give you an investment range live.</div>
+        <div class="action-card-title">Request the Assessment</div>
+        <div class="action-card-desc">Ask for it on your call, or enter your email and we will send the four questions directly.</div>
+        <form class="share-email-form" id="assessment-email-form" onsubmit="submitRequestEmail(event, 'assessment-email-form', 'Program Assessment requested', 'A prospect requested the Program Assessment.', false)" onclick="event.stopPropagation()">
+          <input class="share-email-input" type="email" placeholder="you@organization.org" required>
+          <div class="share-email-error">Please enter a valid email address.</div>
+          <button class="share-email-submit" type="submit">Request Assessment</button>
+        </form>
       </div>
-      <a class="action-card" href="#" onclick="window.print(); return false;">
+      <div class="action-card" onclick="toggleRequestForm('share-email-form')">
         <div class="action-card-label">Share This Proposal</div>
-        <div class="action-card-title">Print This Proposal</div>
-        <div class="action-card-desc">Print or save a copy to share with your executive director or board.</div>
-      </a>
+        <div class="action-card-title">Print or Send to Your Team</div>
+        <div class="action-card-desc">Enter your email and we will unlock a printable copy.</div>
+        <form class="share-email-form" id="share-email-form" onsubmit="submitRequestEmail(event, 'share-email-form', 'Program Overview shared, lead captured', 'A prospect requested a printable copy of the Program Overview.', true)" onclick="event.stopPropagation()">
+          <input class="share-email-input" type="email" placeholder="you@organization.org" required>
+          <div class="share-email-error">Please enter a valid email address.</div>
+          <button class="share-email-submit" type="submit">Send &amp; Print</button>
+        </form>
+      </div>
     </div>
   </div>
 
@@ -1336,12 +1694,192 @@ body { font-family: var(--sans); font-size: 16px; line-height: 1.68; background:
 </div>
 
 <script>
+function toggleRequestForm(formId) {
+  document.getElementById(formId).classList.toggle('open');
+}
+function submitRequestEmail(e, formId, subjectText, bodyText, shouldPrint) {
+  e.preventDefault();
+  const form = document.getElementById(formId);
+  const emailField = form.querySelector('.share-email-input');
+  const errorEl = form.querySelector('.share-email-error');
+  const email = emailField.value.trim();
+  const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  if (!isValid) {
+    errorEl.style.display = 'block';
+    return;
+  }
+  errorEl.style.display = 'none';
+  const subject = encodeURIComponent(subjectText);
+  const body = encodeURIComponent(bodyText + '\n\nEmail provided: ' + email);
+  window.location.href = 'mailto:info@bookcousins.com?subject=' + subject + '&body=' + body;
+  if (shouldPrint) {
+    window.setTimeout(function () { window.print(); }, 500);
+  }
+}
 function toggleFaq(btn) {
   const answer  = btn.nextElementSibling;
   const isOpen  = answer.classList.contains('open');
   answer.classList.toggle('open', !isOpen);
   btn.setAttribute('aria-expanded', String(!isOpen));
 }
+</script>
+<script>
+// ── ROLE CONTENT ENGINE ──
+const ROLES = {
+  care: {
+    name: 'Healthcare / Care Facility',
+    banner: 'This proposal is now framed for care facilities and senior living organizations.',
+    coverTagline: 'Cousins is the operating partner that improves resident wellbeing and family confidence while removing the coordination burden from your care team. We bring professional, recurring programs directly to the people in your care.',
+    execOneSentence: 'Cousins becomes the operating partner responsible for delivering a measurable improvement in resident experience, while removing the coordination burden from your care team.',
+    execResult: 'Stronger resident wellbeing. Greater family confidence. A more efficient organization your leadership team can measure and report on. Three outcomes, one decision.',
+    challengeLead: 'Access to professional personal care is rarely treated as a program priority in care settings. It is managed as an operational afterthought. The result is a gap that affects the wellbeing, dignity, and satisfaction of the residents your organization serves.',
+    roiLead: 'Before the mechanics of how the program runs, here is what actually shifts for your residents, your care team, and the leadership team that has to report on quality outcomes.',
+    programsLead: 'Cousins offers two programs designed around the populations you serve. Many care organizations implement both. The right starting point depends on your resident population, your current programming, and your documentation requirements.',
+    programFocus: 'We recommend starting with the <strong>Recurring Experience Program</strong> for care facilities. It delivers consistent, documented personal care visits on a schedule your team can rely on.',
+    visionClose: 'Residents expect and look forward to every visit. Families see visible evidence of care instead of simply hearing promises. Staff spend their time serving residents instead of coordinating outside vendors. Leadership receives measurable documentation they can present to boards and surveyors. Your organization becomes known for delivering an experience that very few care providers offer.'
+  },
+  pace: {
+    name: 'PACE / Adult Day Health',
+    banner: 'This proposal is now framed for PACE programs and adult day health centers.',
+    coverTagline: 'Cousins integrates directly into your daily operations as a structured, recurring program. We serve PACE participants and adult day health clients in the environment they already trust, removing access barriers and producing measurable outcomes your interdisciplinary team can document.',
+    execOneSentence: 'Cousins becomes the operating partner that embeds professional appearance and personal care programming into your PACE or adult day schedule, producing documented outcomes with zero disruption to clinical operations.',
+    execResult: 'Higher participant engagement. Stronger attendance on program days. Documented outcomes your interdisciplinary team can reference. All delivered without adding coordination work to your staff.',
+    challengeLead: 'PACE programs and adult day health centers know that quality of life is inseparable from clinical outcomes. But consistent, culturally responsive personal care is rarely embedded into operations in a way that produces measurable results. The gap shows up in participant morale, family feedback, and quality of life documentation.',
+    roiLead: 'Our active PACE partnership in Riverside County has documented across 15 visits: 108 services delivered, 100 percent appointment completion rate, attendance increases on service days, and staff requesting expanded hours due to participant demand. That is not a projection. That is what already happened.',
+    programsLead: 'Both Cousins programs are designed to operate inside a PACE or adult day environment. The Recurring Experience Program runs on your schedule as a structured program day. The Confidence and Independence Program brings educational content appropriate for participants working toward greater independence.',
+    programFocus: 'PACE programs most often begin with the <strong>Recurring Experience Program</strong>. It integrates directly into your existing day schedule and produces participant-level documentation that supports quality of life reporting.',
+    visionClose: 'Participants anticipate and request every visit. Attendance climbs on service days. Your interdisciplinary team has documented outcomes to reference in care planning. Family members see consistent, visible evidence that the program delivers. Your PACE center is known for the kind of participant experience that referral partners notice.'
+  },
+  foster: {
+    name: 'Foster Youth / Social Services',
+    banner: 'This proposal is now framed for foster youth and social services organizations.',
+    coverTagline: 'Cousins builds programs that use professional appearance as the entry point for developing confidence, self-presentation, and independence in youth and young adults in care. We have served foster youth through Riverside County DPSS and bring that same model directly to your program.',
+    execOneSentence: 'Cousins becomes the program partner that delivers structured, recurring personal care and confidence-building experiences to youth in care, producing outcomes your team can document and your young people will carry forward.',
+    execResult: 'Greater youth confidence and self-presentation. Structured programming that connects appearance to identity and readiness. Documented outcomes your leadership and county partners can see. All delivered in the environment where your youth already feel safe.',
+    challengeLead: 'Young people in foster care and transitional living programs often lack consistent access to professional personal care. This is not a cosmetic concern. It is a dignity concern and a readiness concern. How a young person looks and feels directly affects their confidence in interviews, school, and community settings.',
+    roiLead: 'Cousins delivered over 100 hair care services at a single Riverside County DPSS foster youth activation. We understand this population, their needs, and the environments they navigate. What we bring to your organization is a structured program, not a one-time event.',
+    programsLead: 'For foster youth and social services organizations, the Confidence and Independence Program is where we typically begin. It connects professional appearance directly to self-presentation, confidence, and life skills in a structured, repeatable format your team can build on.',
+    programFocus: 'We recommend starting with the <strong>Confidence and Independence Program</strong> for foster youth organizations. It is specifically designed around skill-building, self-presentation, and the connection between personal care and readiness for independent living.',
+    visionClose: 'Young people in your program leave every session with more than a fresh style. They leave with language for how they present themselves, awareness of professional standards, and an experience of being genuinely cared for. Staff have documentation. Leaders have outcomes. And your organization has a program that young people talk about and return to.'
+  },
+  school: {
+    name: 'School District / Education',
+    banner: 'This proposal is now framed for school districts and educational institutions.',
+    coverTagline: 'Cousins builds programs that connect professional appearance to student confidence, career readiness, and workforce preparation. We work with school districts to support student equity initiatives, CTE pathways, and the kind of outcomes that show up in attendance, engagement, and career placement data.',
+    execOneSentence: 'Cousins becomes the program partner that brings structured, recurring confidence and career-readiness programming to your students, supporting district equity goals, CTE initiatives, and the professional development outcomes your board measures.',
+    execResult: 'Greater student confidence and professional self-presentation. Programming that bridges appearance, identity, and career readiness. Documented outcomes your administration can present to the board. A visible equity initiative that students and families notice.',
+    challengeLead: 'Students cannot present themselves professionally in internships, college interviews, or career fairs if they have never had access to professional personal care or instruction on professional appearance standards. This gap disproportionately affects students from under-resourced communities and is rarely addressed by existing programming.',
+    roiLead: 'Before the mechanics of how the program runs, here is what shifts for your students, your staff, and the leadership team accountable to board priorities. Professional appearance programming is one of the most direct, visible investments a district can make in student confidence and career readiness.',
+    programsLead: 'For school districts, the Confidence and Independence Program is the starting point. It connects professional appearance directly to career preparation, professional standards, and workforce readiness in a format that aligns with CTE frameworks and student development goals.',
+    programFocus: 'We recommend the <strong>Confidence and Independence Program</strong> for school districts. It is curriculum-based, outcome-documented, and designed to connect directly to career technical education, workforce preparation, and equity initiatives.',
+    visionClose: 'Students complete the program with practical professional appearance skills, greater confidence in interview and career settings, and a documented experience that administrators can reference in board presentations. Teachers report visible changes in how students carry themselves. Career counselors have a concrete resource to reference. Your district is known for investing in the whole student.'
+  },
+  employer: {
+    name: 'HR / Employer',
+    banner: 'This proposal is now framed for HR departments and large employers.',
+    coverTagline: 'Cousins runs employee wellness programs for large organizations with hourly and shift-based workforces. Your HR team maintains a sign-up list. We handle everything else, arriving fully equipped, serving your employees on site, and delivering participation data your leadership can report on.',
+    execOneSentence: 'Cousins becomes the wellness partner that delivers a professional, recurring employee experience program, producing measurable participation outcomes and the kind of culture investment that shows up in retention, morale, and how employees talk about where they work.',
+    execResult: 'Higher employee morale and visible investment in your workforce. A wellness benefit that costs far less than most corporate programs and produces stronger cultural impact. Participation data your HR team can report to leadership. An employee experience people talk about.',
+    challengeLead: 'Large organizations with hourly and shift-based workforces invest significantly in compensation and safety. Very few invest structurally in the personal experience of their employees. The gap shows up in turnover data, engagement scores, and the way employees describe their workplace to peers who are deciding where to apply.',
+    roiLead: 'Before the mechanics of how the program runs, here is what actually changes for your employees, your HR team, and the leadership reporting on culture and retention metrics. Organizations that run structured employee wellness programs consistently outperform peers on retention and engagement, not because the program is expensive, but because it is visible.',
+    programsLead: 'For employers, the Recurring Experience Program operates as a scheduled employee wellness day. It runs on your campus during break windows, requires minimal HR coordination, and delivers participation documentation your team can include in wellness reporting.',
+    programFocus: 'We recommend the <strong>Recurring Experience Program</strong> for employers. It runs on a schedule your HR team sets, requires no day-of coordination from your staff, and produces the kind of visible, repeatable investment in employees that changes how people talk about working for you.',
+    visionClose: 'Employees anticipate the program days. Word spreads internally. New hires ask about it during onboarding. HR leadership has participation numbers to present. Your organization is known in your industry and your community as a place that invests in the people who do the work. That reputation compounds.'
+  }
+};
+
+const TARGETS = {
+  coverTagline:     '.cover-tagline',
+  execOneSentence:  '.exec-one-sentence',
+  execResult:       '.exec-result-text',
+  challengeLead:    '.challenge-lead',
+  roiLead:          '.roi-lead',
+  programsLead:     '.programs-lead',
+  programFocus:     '.program-focus-note',
+  visionClose:      '.vision-close-text'
+};
+
+const ORIGINALS = {};
+
+function cacheOriginals() {
+  Object.entries(TARGETS).forEach(function([key, selector]) {
+    var el = document.querySelector(selector);
+    if (el) ORIGINALS[key] = el.innerHTML;
+  });
+}
+
+function applyRole(role) {
+  var r = ROLES[role];
+  if (!r) return;
+  Object.entries(TARGETS).forEach(function([key, selector]) {
+    var el = document.querySelector(selector);
+    if (!el) return;
+    if (key === 'programFocus') {
+      if (r[key]) {
+        el.innerHTML = r[key];
+        el.style.display = 'block';
+      } else {
+        el.style.display = 'none';
+      }
+    } else if (r[key]) {
+      el.innerHTML = r[key];
+    }
+  });
+}
+
+function clearRole() {
+  Object.entries(TARGETS).forEach(function([key, selector]) {
+    var el = document.querySelector(selector);
+    if (el && ORIGINALS[key] !== undefined) {
+      el.innerHTML = ORIGINALS[key];
+      if (key === 'programFocus') el.style.display = 'none';
+    }
+  });
+}
+
+function selectRole(role) {
+  var r = ROLES[role];
+  if (!r) return;
+  applyRole(role);
+  document.getElementById('role-gate').style.display = 'none';
+  var banner = document.getElementById('role-banner');
+  banner.classList.add('visible');
+  document.getElementById('role-banner-name').textContent = r.name;
+  document.getElementById('role-banner-message').textContent = r.banner;
+  try { sessionStorage.setItem('cousins_role', role); } catch(e) {}
+  setTimeout(function() {
+    var nav = document.querySelector('nav.doc-nav');
+    if (nav) {
+      var top = nav.getBoundingClientRect().top + window.scrollY - 10;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    }
+  }, 80);
+}
+
+function skipRole() {
+  document.getElementById('role-gate').style.display = 'none';
+  try { sessionStorage.setItem('cousins_role', 'skip'); } catch(e) {}
+}
+
+function resetRole() {
+  clearRole();
+  document.getElementById('role-gate').style.display = 'flex';
+  document.getElementById('role-banner').classList.remove('visible');
+  try { sessionStorage.removeItem('cousins_role'); } catch(e) {}
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  cacheOriginals();
+  try {
+    var saved = sessionStorage.getItem('cousins_role');
+    if (saved && saved !== 'skip' && ROLES[saved]) {
+      setTimeout(function() { selectRole(saved); }, 150);
+    } else if (saved === 'skip') {
+      document.getElementById('role-gate').style.display = 'none';
+    }
+  } catch(e) {}
+});
 </script>
 </body>
 </html>
